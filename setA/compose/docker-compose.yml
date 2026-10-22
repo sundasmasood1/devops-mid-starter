@@ -1,0 +1,28 @@
+services:
+  web:
+    image: sundasmasoodsm0984720/mid-app:56623
+    environment:
+      - ROLLNO=56623
+      - REDIS_HOST=cache
+    ports:
+      - "8023:5000"
+    networks:
+      - appnet
+    depends_on:
+      - cache
+
+  cache:
+    image: redis:alpine
+    command: redis-server --appendonly yes --dir /data
+    volumes:
+      - redisdata:/data
+    networks:
+      - appnet
+
+networks:
+  appnet:
+    name: net-56623
+
+volumes:
+  redisdata:
+    name: data-56623
